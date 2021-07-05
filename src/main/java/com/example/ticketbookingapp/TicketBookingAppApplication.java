@@ -42,9 +42,9 @@ public class TicketBookingAppApplication {
 
 
 //Getting enum TicketTypes
-		System.out.println(TicketTypes.ADULT.getPrice());
-		System.out.println(TicketTypes.STUDENT.getPrice());
-		System.out.println(TicketTypes.CHILD.getPrice());
+		System.out.println(TicketTypesEnum.ADULT.getPrice());
+		System.out.println(TicketTypesEnum.STUDENT.getPrice());
+		System.out.println(TicketTypesEnum.CHILD.getPrice());
 
 	}
 
