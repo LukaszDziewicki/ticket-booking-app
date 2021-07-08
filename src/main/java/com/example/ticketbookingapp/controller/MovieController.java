@@ -3,13 +3,11 @@ package com.example.ticketbookingapp.controller;
 
 import com.example.ticketbookingapp.model.Movie;
 import com.example.ticketbookingapp.model.Room;
-import com.example.ticketbookingapp.repository.MovieRepository;
 import com.example.ticketbookingapp.service.MovieServiceImpl;
 import com.example.ticketbookingapp.service.RoomServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RestController

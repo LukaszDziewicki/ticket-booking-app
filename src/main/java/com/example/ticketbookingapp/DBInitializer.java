@@ -27,9 +27,6 @@ public class DBInitializer implements CommandLineRunner {
         movieService.saveAll(getThreeMovies());
         roomService.saveAll(getThreeRooms());
 
-
-
-
     }
 
 
