@@ -18,11 +18,6 @@ public class MovieServiceImpl {
     }
 
 
-    public void save(Movie movie){
-        movieRepository.save(movie);
-
-    }
-
     public void saveAll(List<Movie> movies){
         movieRepository.saveAll(movies);
 
@@ -30,6 +25,10 @@ public class MovieServiceImpl {
 
     public List<Movie> findAll() {
         return movieRepository.findAll();
+    }
+
+    public Movie findMovieByTitle(String title){
+       return movieRepository.findMovieByTitle(title);
     }
 
     public void deleteAll(){
@@ -40,6 +39,9 @@ public class MovieServiceImpl {
         movieRepository.deleteById(id);
     }
 
+    public void save(Movie movie){
+        movieRepository.save(movie);
 
+    }
 }
 

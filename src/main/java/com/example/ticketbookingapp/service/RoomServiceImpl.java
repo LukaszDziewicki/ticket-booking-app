@@ -16,12 +16,17 @@ public class RoomServiceImpl {
         this.roomRepository = roomRepository;
     }
 
+
     public void saveAll(List<Room> rooms){
         roomRepository.saveAll(rooms);
     }
 
     public List<Room> findAll(){
         return roomRepository.findAll();
+    }
+
+    public Room findRoomByRoomNumber(int roomNumber){
+        return roomRepository.findRoomByRoomNumber(roomNumber);
     }
 
     public void deleteAll(){

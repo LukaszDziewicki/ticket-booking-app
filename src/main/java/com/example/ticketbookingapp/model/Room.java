@@ -10,10 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Room {
     @Id
     private String id;
+    private int roomNumber;
     private Seat[][] seats;
 
-    public Room(Seat[][] seats) {
+    public Room(int roomNumber, Seat[][] seats) {
+        this.roomNumber = roomNumber;
         this.seats = seats;
     }
-
 }
