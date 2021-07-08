@@ -1,4 +1,4 @@
-package com.example.ticketbookingapp;
+package com.example.ticketbookingapp.model;
 
 import java.math.BigDecimal;
 

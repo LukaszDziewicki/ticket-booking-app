@@ -1,37 +1,21 @@
 package com.example.ticketbookingapp.model;
 
+
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Data
+@Document(collection = "movies")
 public class Movie {
+    @Id
+    private String id;
     private String title;
-    private String author;
     private int durationInMinutes;
 
-    public Movie(String title, String author, int durationInMinutes) {
+    public Movie(String title, int durationInMinutes) {
         this.title = title;
-        this.author = author;
         this.durationInMinutes = durationInMinutes;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public int getDurationInMinutes() {
-        return durationInMinutes;
-    }
-
-    public void setDurationInMinutes(int durationInMinutes) {
-        this.durationInMinutes = durationInMinutes;
-    }
 }

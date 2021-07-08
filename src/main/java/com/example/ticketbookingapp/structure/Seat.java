@@ -1,4 +1,4 @@
-package com.example.ticketbookingapp.model;
+package com.example.ticketbookingapp.structure;
 
 public class Seat {
     private int rowNumber;
