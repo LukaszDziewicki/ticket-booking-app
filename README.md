@@ -1,13 +1,15 @@
 # Ticket-booking-app
 ## Table of contents
-* [Introduction](#introduction)
-* [Demo](#demo)
-* [Functionalities](#Functionalities)
+* [Introduction](#Introduction)
+* [Build](#Build)
+* [Curl](#Curl)
 * [Postman](#Postman)
 * [Pull](#Pull)
 
 ## Introduction
 The goal is to build a seat reservation system for a multiplex.
+## Build
+To build project open as a project in IntelliJ IDE and run, server started on port :8085
 ## Curl
 The user selects the day and the time when he/she would like to see the movie.
 
