@@ -3,7 +3,7 @@
 * [Introduction](#introduction)
 * [Demo](#demo)
 * [Functionalities](#Functionalities)
-* * [Postman](#Postman)
+* [Postman](#Postman)
 * [Pull](#Pull)
 
 ## Introduction
