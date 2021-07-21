@@ -21,10 +21,6 @@ public class RoomServiceImpl {
         roomRepository.saveAll(rooms);
     }
 
-    public List<Room> findAll(){
-        return roomRepository.findAll();
-    }
-
     public Room findRoomByRoomNumber(int roomNumber){
         return roomRepository.findRoomByRoomNumber(roomNumber);
     }

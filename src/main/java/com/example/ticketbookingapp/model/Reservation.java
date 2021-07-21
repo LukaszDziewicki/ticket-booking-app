@@ -1,10 +1,19 @@
 package com.example.ticketbookingapp.model;
 
-import com.example.ticketbookingapp.structure.Seat;
-import com.example.ticketbookingapp.structure.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
+@Document(collection = "reservations")
 public class Reservation {
-    private User user;
+
+    @Id
+    @JsonIgnore
+    private String id;
+    private String name;
+    private String surname;
     private Seance seance;
     private Seat[] reservedSeats;
     private int adultSeats;
@@ -12,4 +21,19 @@ public class Reservation {
     private int childSeats;
 
 
+    public Reservation(String name,
+                       String surname,
+                       Seance seance,
+                       Seat[] reservedSeats,
+                       int adultSeats,
+                       int studentSeats,
+                       int childSeats) {
+        this.name = name;
+        this.surname = surname;
+        this.seance = seance;
+        this.reservedSeats = reservedSeats;
+        this.adultSeats = adultSeats;
+        this.studentSeats = studentSeats;
+        this.childSeats = childSeats;
+    }
 }

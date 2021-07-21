@@ -3,27 +3,28 @@ package com.example.ticketbookingapp;
 import com.example.ticketbookingapp.model.Movie;
 import com.example.ticketbookingapp.model.Room;
 import com.example.ticketbookingapp.model.Seance;
-import com.example.ticketbookingapp.model.TicketTypesEnum;
 import com.example.ticketbookingapp.service.MovieServiceImpl;
 import com.example.ticketbookingapp.service.RoomServiceImpl;
 import com.example.ticketbookingapp.service.SeanceServiceImpl;
-import com.example.ticketbookingapp.structure.Seat;
-import lombok.Data;
+import com.example.ticketbookingapp.model.Seat;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Component
 public class DBInitializer implements CommandLineRunner {
 
-    private MovieServiceImpl movieService;
-    private RoomServiceImpl roomService;
-    private SeanceServiceImpl seanceService;
+    private final MovieServiceImpl movieService;
+    private final RoomServiceImpl roomService;
+    private final SeanceServiceImpl seanceService;
 
     public DBInitializer(MovieServiceImpl movieService,
                          RoomServiceImpl roomService,
@@ -36,14 +37,9 @@ public class DBInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
         clearDB();
-
-        movieService.saveAll(getThreeMovies());
-        roomService.saveAll(getThreeRooms());
-        seanceService.saveAll(getSixSeances());
-
-
-
-
+        movieService.saveAll(getListOfThreeMovies());
+        roomService.saveAll(getListOfThreeRooms());
+        seanceService.saveAll(getListOfSixSeances());
     }
 
     private void clearDB(){
@@ -52,15 +48,15 @@ public class DBInitializer implements CommandLineRunner {
         seanceService.deleteAll();
     }
 
-    private List<Movie> getThreeMovies(){
-        Movie firstMovie = new Movie("Harry Potter",  130);
-        Movie secondMovie = new Movie("Kill Bill",  100);
-        Movie thirdMovie = new Movie("Fast and Furious",  190);
+    private List<Movie> getListOfThreeMovies(){
+        Movie firstMovie = new Movie("Harry Potter", Duration.parse("PT120M"));
+        Movie secondMovie = new Movie("Kill Bill", Duration.parse("PT130M"));
+        Movie thirdMovie = new Movie("Fast and Furious", Duration.parse("PT190M"));
 
         return  List.of(firstMovie, secondMovie, thirdMovie);
     }
 
-    private List<Room> getThreeRooms() {
+    private List<Room> getListOfThreeRooms() {
         Room roomSmall = generateRoom(1, 10, 20);
         Room roomMedium = generateRoom(2, 20, 30);
         Room roomBig = generateRoom(3, 20, 40);
@@ -81,41 +77,60 @@ public class DBInitializer implements CommandLineRunner {
         return room;
     }
 
-    //TODO change date format
-    private List<Seance> getSixSeances() {
-        Seance firstSeanceFirstRoom = createSeance("Harry Potter", 1, "2021-07-10 12:00:00");
-        Seance secondSeanceFirstRoom = createSeance("Harry Potter", 1, "2021-07-10 16:00:00");
+    private List<Seance> getListOfSixSeances(){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m:s");
+            Seance firstSeance = createSeance(
+                    "Harry Potter",
+                    1,
+                    LocalDateTime.parse("2021-07-10 12:00:00", dateTimeFormatter)
+            );
 
-        Seance firstSeanceSecondRoom = createSeance("Kill Bill", 2, "2021-07-10 12:00:00");
-        Seance secondSeanceSecondRoom = createSeance("Kill Bill", 2, "2021-07-10 16:00:00");
+            Seance secondSeance = createSeance(
+                    "Harry Potter",
+                    1,
+                    LocalDateTime.parse("2021-07-10 16:00:00", dateTimeFormatter)
+            );
 
-        Seance firstSeanceThirdRoom = createSeance("Fast and Furious", 3, "2021-07-10 12:00:00");
-        Seance secondSeanceThirdRoom = createSeance("Fast and Furious", 3, "2021-07-10 16:00:00");
+
+            Seance thirdSeance = createSeance(
+                    "Kill Bill",
+                    2,
+                    LocalDateTime.parse("2021-07-10 13:00:00", dateTimeFormatter)
+            );
+
+            Seance fourthSeance = createSeance(
+                    "Kill Bill",
+                    2,
+                    LocalDateTime.parse("2021-07-10 21:00:00", dateTimeFormatter)
+            );
+
+
+            Seance fifthSeance = createSeance(
+                    "Fast and Furious",
+                    3,
+                    LocalDateTime.parse("2021-07-10 11:00:00", dateTimeFormatter)
+            );
+
+            Seance sixthSeance = createSeance(
+                    "Fast and Furious",
+                    3,
+                    LocalDateTime.parse("2021-07-10 16:00:00", dateTimeFormatter)
+            );
 
         return List.of(
-                firstSeanceFirstRoom,
-                secondSeanceFirstRoom,
-                firstSeanceSecondRoom,
-                secondSeanceSecondRoom,
-                firstSeanceThirdRoom,
-                secondSeanceThirdRoom
-        );
+                    firstSeance,
+                    secondSeance,
+                    thirdSeance,
+                    fourthSeance,
+                    fifthSeance,
+                    sixthSeance
+            );
     }
 
-    //TODO handle try catch exceptions: date, null, invalid parameter
-    private Seance createSeance(String movieTitle, int roomNumber, String seanceDate) {
+    private Seance createSeance(String movieTitle, int roomNumber, LocalDateTime seanceDate) {
         Movie movie = movieService.findMovieByTitle(movieTitle);
         Room room = roomService.findRoomByRoomNumber(roomNumber);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd H:m:s");
 
-        Date date = null;
-        try {
-            date = dateFormat.parse(seanceDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return new Seance(movie, room, date);
-
+        return new Seance(movie, room, seanceDate);
     }
 }
