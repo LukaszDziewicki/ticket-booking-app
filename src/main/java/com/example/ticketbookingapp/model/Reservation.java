@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import javax.validation.constraints.Min;
 
 @Data
 @Document(collection = "reservations")
@@ -12,8 +13,13 @@ public class Reservation {
     @Id
     @JsonIgnore
     private String id;
+
+    @Min(3)
     private String name;
+
+    @Min(3)
     private String surname;
+
     private Seance seance;
     private Seat[] reservedSeats;
     private int adultSeats;

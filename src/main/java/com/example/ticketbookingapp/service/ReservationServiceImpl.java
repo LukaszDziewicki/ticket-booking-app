@@ -7,6 +7,7 @@ import com.example.ticketbookingapp.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Service
 public class ReservationServiceImpl {
@@ -36,6 +37,21 @@ public class ReservationServiceImpl {
 
     public LocalDateTime getExpireDate(Reservation reservation){
         return reservation.getSeance().getSeanceDate().minusHours(1);
+    }
+
+    public boolean isReservationValid(Reservation reservation) {
+        if (isAtLeastOneSeat(reservation)){
+            return true;
+        }{
+            return false;
+        }
+    }
+
+    private boolean isAtLeastOneSeat(Reservation reservation) {
+        if (reservation.getReservedSeats().length >= 1){
+            return true;
+        }
+        return false;
     }
 
 
